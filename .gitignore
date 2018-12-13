@@ -41,3 +41,7 @@ GTAGS
 GRTAGS
 GPATH
 GSYMS
+
+# cryptex
+*/build
+.gradle
