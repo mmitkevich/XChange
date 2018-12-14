@@ -9,6 +9,7 @@ import org.knowm.xchange.okcoin.dto.account.OkCoinAccountRecords;
 import org.knowm.xchange.okcoin.dto.account.OkCoinFuturesUserInfoCross;
 import org.knowm.xchange.okcoin.dto.account.OkCoinFuturesUserInfoFixed;
 import org.knowm.xchange.okcoin.dto.account.OkCoinUserInfo;
+import org.knowm.xchange.okcoin.dto.trade.OkCoinPositionResult;
 
 public class OkCoinAccountServiceRaw extends OKCoinBaseTradeService {
   private final String tradepwd;
@@ -145,4 +146,13 @@ public class OkCoinAccountServiceRaw extends OKCoinBaseTradeService {
             signatureCreator())
         .isResult();
   }
+
+  public OkCoinPositionResult getFuturesPosition(String symbol, String contract)
+          throws IOException {
+    OkCoinPositionResult futuresPositionsCross =
+            okCoin.getFuturesPositionsCross(apikey, symbol, contract, signatureCreator());
+
+    return returnOrThrow(futuresPositionsCross);
+  }
+
 }

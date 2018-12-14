@@ -2,6 +2,7 @@ package org.knowm.xchange.anx.v2.service.marketdata;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.knowm.xchange.Exchange;
 import org.knowm.xchange.ExchangeFactory;
@@ -13,7 +14,7 @@ import org.knowm.xchange.service.marketdata.MarketDataService;
 /** @author timmolter */
 public class TickerFetchIntegration {
 
-  @Test
+  @Test @Ignore
   public void tickerFetchTest() throws Exception {
 
     Exchange exchange = ExchangeFactory.INSTANCE.createExchange(ANXExchange.class.getName());

@@ -10,38 +10,18 @@ import org.knowm.xchange.bitfinex.v1.BitfinexOrderType;
 import org.knowm.xchange.bitfinex.v1.BitfinexUtils;
 import org.knowm.xchange.bitfinex.v1.dto.account.BitfinexWithdrawalRequest;
 import org.knowm.xchange.bitfinex.v1.dto.account.BitfinexWithdrawalResponse;
-import org.knowm.xchange.bitfinex.v1.dto.trade.BitfinexAccountInfosResponse;
-import org.knowm.xchange.bitfinex.v1.dto.trade.BitfinexActiveCreditsRequest;
-import org.knowm.xchange.bitfinex.v1.dto.trade.BitfinexActivePositionsResponse;
-import org.knowm.xchange.bitfinex.v1.dto.trade.BitfinexCancelAllOrdersRequest;
-import org.knowm.xchange.bitfinex.v1.dto.trade.BitfinexCancelOfferRequest;
-import org.knowm.xchange.bitfinex.v1.dto.trade.BitfinexCancelOrderMultiRequest;
-import org.knowm.xchange.bitfinex.v1.dto.trade.BitfinexCancelOrderRequest;
-import org.knowm.xchange.bitfinex.v1.dto.trade.BitfinexCreditResponse;
-import org.knowm.xchange.bitfinex.v1.dto.trade.BitfinexFundingTradeResponse;
-import org.knowm.xchange.bitfinex.v1.dto.trade.BitfinexLimitOrder;
-import org.knowm.xchange.bitfinex.v1.dto.trade.BitfinexNewOfferRequest;
-import org.knowm.xchange.bitfinex.v1.dto.trade.BitfinexNewOrder;
-import org.knowm.xchange.bitfinex.v1.dto.trade.BitfinexNewOrderMultiRequest;
-import org.knowm.xchange.bitfinex.v1.dto.trade.BitfinexNewOrderMultiResponse;
-import org.knowm.xchange.bitfinex.v1.dto.trade.BitfinexNewOrderRequest;
-import org.knowm.xchange.bitfinex.v1.dto.trade.BitfinexNonceOnlyRequest;
-import org.knowm.xchange.bitfinex.v1.dto.trade.BitfinexOfferStatusRequest;
-import org.knowm.xchange.bitfinex.v1.dto.trade.BitfinexOfferStatusResponse;
-import org.knowm.xchange.bitfinex.v1.dto.trade.BitfinexOrderFlags;
-import org.knowm.xchange.bitfinex.v1.dto.trade.BitfinexOrderStatusRequest;
-import org.knowm.xchange.bitfinex.v1.dto.trade.BitfinexOrderStatusResponse;
-import org.knowm.xchange.bitfinex.v1.dto.trade.BitfinexOrdersHistoryRequest;
-import org.knowm.xchange.bitfinex.v1.dto.trade.BitfinexPastFundingTradesRequest;
-import org.knowm.xchange.bitfinex.v1.dto.trade.BitfinexPastTradesRequest;
-import org.knowm.xchange.bitfinex.v1.dto.trade.BitfinexReplaceOrderRequest;
-import org.knowm.xchange.bitfinex.v1.dto.trade.BitfinexTradeResponse;
+import org.knowm.xchange.bitfinex.v1.dto.trade.*;
 import org.knowm.xchange.dto.Order;
 import org.knowm.xchange.dto.Order.OrderType;
 import org.knowm.xchange.dto.trade.FixedRateLoanOrder;
 import org.knowm.xchange.dto.trade.FloatingRateLoanOrder;
 import org.knowm.xchange.dto.trade.LimitOrder;
 import org.knowm.xchange.dto.trade.MarketOrder;
+import si.mazi.rescu.ParamsDigest;
+
+import javax.ws.rs.HeaderParam;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
 
 public class BitfinexTradeServiceRaw extends BitfinexBaseService {
 

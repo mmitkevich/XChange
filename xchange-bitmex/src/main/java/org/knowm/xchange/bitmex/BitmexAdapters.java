@@ -424,4 +424,17 @@ public class BitmexAdapters {
         return null;
     }
   }
+
+  public static String toBitmexSymbol(CurrencyPair currencyPair) {
+    return adaptXchangeCurrency(currencyPair.base.toString()) + adaptXchangeCurrency(currencyPair.counter.toString());
+  }
+
+  public static String adaptXchangeCurrency(String xchangeSymbol) {
+    String currency = xchangeSymbol.toUpperCase();
+    if (currency.equals("BTC")) {
+      currency = "XBT";
+    }
+    return currency;
+  }
+
 }

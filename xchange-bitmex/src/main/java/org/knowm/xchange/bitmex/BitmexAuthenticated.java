@@ -298,6 +298,28 @@ public interface BitmexAuthenticated extends Bitmex {
       throws IOException, BitmexException;
 
   /**
+   * Either an orderID or a clOrdID must be provided.
+   *
+   * @param apiKey
+   * @param nonce
+   * @param paramsDigest
+   * @param orderID Order ID(s).
+   * @param clOrdID Client Order ID(s). See {@link Bitmex#placeOrder}.
+   * @return {@link BitmexPrivateOrderList} contains the results of the call.
+   * @throws IOException
+   * @throws BitmexException
+   */
+  @DELETE
+  @Path("order")
+  BitmexPrivateOrderList cancelOrderBulk(
+          @HeaderParam("api-key") String apiKey,
+          @HeaderParam("api-expires") SynchronizedValueFactory<Long> nonce,
+          @HeaderParam("api-signature") ParamsDigest paramsDigest,
+          @Nullable @FormParam("orderID") String[] orderID,
+          @Nullable @FormParam("clOrdID") String[] clOrdID)
+          throws IOException, BitmexException;
+
+  /**
    * @param apiKey
    * @param nonce
    * @param paramsDigest

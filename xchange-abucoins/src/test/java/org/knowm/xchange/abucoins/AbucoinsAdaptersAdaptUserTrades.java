@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import java.math.BigDecimal;
 import java.util.Arrays;
 import org.assertj.core.util.Maps;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.knowm.xchange.abucoins.dto.account.AbucoinsFill;
 import org.knowm.xchange.abucoins.dto.account.AbucoinsFills;
@@ -15,6 +16,8 @@ import org.knowm.xchange.dto.trade.UserTrades;
 public class AbucoinsAdaptersAdaptUserTrades {
 
   @Test
+  @Ignore
+
   public void testAdaptUserTrades() {
     AbucoinsFills fills = new AbucoinsFills();
     fills.setResponseHeaders(Maps.newHashMap("AC-BEFORE", Arrays.asList("someNextCursorValue")));

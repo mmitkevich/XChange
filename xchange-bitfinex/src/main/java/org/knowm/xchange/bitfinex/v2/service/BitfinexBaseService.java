@@ -1,5 +1,6 @@
 package org.knowm.xchange.bitfinex.v2.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.knowm.xchange.Exchange;
 import org.knowm.xchange.bitfinex.common.dto.BitfinexException;
 import org.knowm.xchange.bitfinex.common.service.BitfinexHmacPostBodyDigest;
@@ -20,6 +21,7 @@ public class BitfinexBaseService extends BaseExchangeService implements BaseServ
   protected final BitfinexAuthenticated bitfinex;
   protected final ParamsDigest signatureCreator;
   protected final ParamsDigest payloadCreator;
+  protected ObjectMapper mapper = new ObjectMapper();
 
   /**
    * Constructor

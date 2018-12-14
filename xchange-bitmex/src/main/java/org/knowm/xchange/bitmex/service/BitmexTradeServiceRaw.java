@@ -209,6 +209,19 @@ public class BitmexTradeServiceRaw extends BitmexBaseService {
   }
 
   @Nonnull
+  public List<BitmexPrivateOrder> cancelBitmexOrderBulk(String[] orderId, String[] clOrdId)
+          throws ExchangeException {
+    return updateRateLimit(
+            () ->
+                    bitmex.cancelOrderBulk(
+                            apiKey,
+                            exchange.getNonceFactory(),
+                            signatureCreator,
+                            orderId,
+                            clOrdId));
+  }
+
+  @Nonnull
   public BitmexPosition updateLeveragePosition(String symbol, BigDecimal leverage)
       throws ExchangeException {
     return updateRateLimit(
