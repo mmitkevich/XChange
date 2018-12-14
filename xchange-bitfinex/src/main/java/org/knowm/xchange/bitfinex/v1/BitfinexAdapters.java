@@ -19,6 +19,7 @@ import org.knowm.xchange.bitfinex.v1.dto.marketdata.BitfinexSymbolDetail;
 import org.knowm.xchange.bitfinex.v1.dto.marketdata.BitfinexTicker;
 import org.knowm.xchange.bitfinex.v1.dto.marketdata.BitfinexTrade;
 import org.knowm.xchange.bitfinex.v1.dto.trade.BitfinexAccountInfosResponse;
+import org.knowm.xchange.bitfinex.v1.dto.trade.BitfinexActivePositionsResponse;
 import org.knowm.xchange.bitfinex.v1.dto.trade.BitfinexOrderStatusResponse;
 import org.knowm.xchange.bitfinex.v1.dto.trade.BitfinexTradeResponse;
 import org.knowm.xchange.currency.Currency;
@@ -302,13 +303,13 @@ public final class BitfinexAdapters {
         .build();
   }
 
-  public static List<Wallet> adaptWallets(BitfinexBalancesResponse[] response) {
+  public static List<Wallet> adaptWallets(BitfinexBalancesResponse[] balancesResponses, BitfinexActivePositionsResponse[] positionResponses) {
 
     Map<String, Map<String, BigDecimal[]>> walletsBalancesMap = new HashMap<>();
 
     // for each currency we have multiple balances types: exchange, trading, deposit.
     // each of those may be partially frozen/available
-    for (BitfinexBalancesResponse balance : response) {
+    for (BitfinexBalancesResponse balance : balancesResponses) {
       String walletId = balance.getType();
 
       if (!walletsBalancesMap.containsKey(walletId)) {
@@ -344,8 +345,20 @@ public final class BitfinexAdapters {
       wallets.add(new Wallet(walletData.getKey(), balances));
     }
 
+    List<Balance> aposBalances = new ArrayList<>();
+    for(BitfinexActivePositionsResponse apos: positionResponses) {
+      aposBalances.add(new Balance(fromSymbol(apos.getSymbol()), apos.getAmount(), new BigDecimal(0)));
+    }
+    wallets.add(new Wallet("positions", aposBalances));
     return wallets;
   }
+
+  public static Currency fromSymbol(String symbol) {
+    if(symbol.toUpperCase().startsWith("XBT"))
+      return Currency.BTC;
+    return Currency.getInstance(symbol.substring(0,3).toUpperCase());
+  }
+
 
   public static OpenOrders adaptOrders(BitfinexOrderStatusResponse[] activeOrders) {
 

@@ -10,6 +10,7 @@ import org.knowm.xchange.exceptions.ExchangeException;
 import org.knowm.xchange.exceptions.FundsExceededException;
 import org.knowm.xchange.exceptions.InternalServerException;
 import org.knowm.xchange.exceptions.RateLimitExceededException;
+import org.knowm.xchange.proxy.Socks4ProxyHelper;
 import org.knowm.xchange.service.BaseExchangeService;
 import org.knowm.xchange.service.BaseService;
 import si.mazi.rescu.HttpResponseAware;
@@ -33,11 +34,13 @@ public class BitmexBaseService extends BaseExchangeService<BitmexExchange> imple
   public BitmexBaseService(BitmexExchange exchange) {
 
     super(exchange);
+
     bitmex =
-        RestProxyFactory.createProxy(
-            BitmexAuthenticated.class,
-            exchange.getExchangeSpecification().getSslUri(),
-            getClientConfig());
+            Socks4ProxyHelper.createSock4OrDirectProxyRest(
+              BitmexAuthenticated.class,
+              exchange,
+              exchange.getExchangeSpecification().getSslUri(),
+              getClientConfig());
     signatureCreator =
         BitmexDigest.createInstance(exchange.getExchangeSpecification().getSecretKey());
   }

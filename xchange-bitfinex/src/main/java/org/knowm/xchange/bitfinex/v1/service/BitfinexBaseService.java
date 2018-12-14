@@ -9,6 +9,7 @@ import org.knowm.xchange.exceptions.ExchangeException;
 import org.knowm.xchange.exceptions.FundsExceededException;
 import org.knowm.xchange.exceptions.NonceException;
 import org.knowm.xchange.exceptions.RateLimitExceededException;
+import org.knowm.xchange.proxy.Socks4ProxyHelper;
 import org.knowm.xchange.service.BaseExchangeService;
 import org.knowm.xchange.service.BaseService;
 import si.mazi.rescu.ParamsDigest;
@@ -31,10 +32,11 @@ public class BitfinexBaseService extends BaseExchangeService implements BaseServ
     super(exchange);
 
     this.bitfinex =
-        RestProxyFactory.createProxy(
-            BitfinexAuthenticated.class,
-            exchange.getExchangeSpecification().getSslUri(),
-            getClientConfig());
+            Socks4ProxyHelper.createSock4OrDirectProxyRest(
+                    BitfinexAuthenticated.class,
+                    exchange,
+                    exchange.getExchangeSpecification().getSslUri(),
+                    getClientConfig());
     this.apiKey = exchange.getExchangeSpecification().getApiKey();
     this.signatureCreator =
         BitfinexHmacPostBodyDigest.createInstance(

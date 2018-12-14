@@ -29,7 +29,7 @@ public class ExchangeSpecification {
   private int httpConnTimeout = 0; // default rescu configuration will be used if value not changed
   private int httpReadTimeout = 0; // default rescu configuration will be used if value not changed
   private String metaDataJsonFileOverride = null;
-  private boolean shouldLoadRemoteMetaData = true; // default value
+  private boolean shouldLoadRemoteMetaData = false; // default value
   /** arbitrary exchange params that can be set for unique cases */
   private Map<String, Object> exchangeSpecificParameters = new HashMap<>();
 

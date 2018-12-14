@@ -1,4 +1,5 @@
 rootProject.name = 'xchange-parent'
+include ':rescu-extension'
 include ':xchange-abucoins'
 include ':xchange-acx'
 include ':xchange-anx'

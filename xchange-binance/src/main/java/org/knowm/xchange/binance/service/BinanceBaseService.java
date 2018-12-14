@@ -7,6 +7,7 @@ import org.knowm.xchange.Exchange;
 import org.knowm.xchange.binance.BinanceAuthenticated;
 import org.knowm.xchange.binance.BinanceExchange;
 import org.knowm.xchange.binance.dto.meta.exchangeinfo.BinanceExchangeInfo;
+import org.knowm.xchange.proxy.Socks4ProxyHelper;
 import org.knowm.xchange.service.BaseExchangeService;
 import org.knowm.xchange.service.BaseService;
 import org.slf4j.Logger;
@@ -26,10 +27,11 @@ public class BinanceBaseService extends BaseExchangeService implements BaseServi
 
     super(exchange);
     this.binance =
-        RestProxyFactory.createProxy(
-            BinanceAuthenticated.class,
-            exchange.getExchangeSpecification().getSslUri(),
-            getClientConfig());
+            Socks4ProxyHelper.createSock4OrDirectProxyRest(
+                    BinanceAuthenticated.class,
+                    exchange,
+                    exchange.getExchangeSpecification().getSslUri(),
+                    getClientConfig());
     this.apiKey = exchange.getExchangeSpecification().getApiKey();
     this.signatureCreator =
         BinanceHmacDigest.createInstance(exchange.getExchangeSpecification().getSecretKey());

@@ -8,6 +8,8 @@ import org.knowm.xchange.bitmex.dto.account.BitmexAccount;
 import org.knowm.xchange.bitmex.dto.account.BitmexMarginAccount;
 import org.knowm.xchange.bitmex.dto.account.BitmexWallet;
 import org.knowm.xchange.bitmex.dto.account.BitmexWalletTransaction;
+import org.knowm.xchange.bitmex.dto.trade.BitmexPosition;
+import org.knowm.xchange.bitmex.dto.trade.BitmexPositionList;
 import org.knowm.xchange.currency.Currency;
 import org.knowm.xchange.exceptions.ExchangeException;
 
@@ -29,6 +31,11 @@ public class BitmexAccountServiceRaw extends BitmexBaseService {
   public BitmexAccount getBitmexAccountInfo() throws ExchangeException {
     return updateRateLimit(
         () -> bitmex.getAccount(apiKey, exchange.getNonceFactory(), signatureCreator));
+  }
+
+  public List<BitmexPosition> getBitmexPositions() {
+    return updateRateLimit(
+            () -> bitmex.getPositions(apiKey, exchange.getNonceFactory(), signatureCreator));
   }
 
   public BitmexWallet getBitmexWallet(Currency... ccy) throws ExchangeException {

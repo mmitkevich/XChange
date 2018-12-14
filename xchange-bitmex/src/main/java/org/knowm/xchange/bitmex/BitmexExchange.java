@@ -12,12 +12,14 @@ import org.knowm.xchange.bitmex.service.BitmexMarketDataService;
 import org.knowm.xchange.bitmex.service.BitmexMarketDataServiceRaw;
 import org.knowm.xchange.bitmex.service.BitmexTradeService;
 import org.knowm.xchange.dto.Order;
+import org.knowm.xchange.utils.nonce.AtomicLongCurrentTime1000IncrementalNonceFactory;
+import org.knowm.xchange.utils.nonce.AtomicLongCurrentTimeIncrementalNonceFactory;
 import org.knowm.xchange.utils.nonce.ExpirationTimeFactory;
 import si.mazi.rescu.SynchronizedValueFactory;
 
 public class BitmexExchange extends BaseExchange implements Exchange {
 
-  private SynchronizedValueFactory<Long> nonceFactory = new ExpirationTimeFactory(30);
+  private SynchronizedValueFactory<Long> nonceFactory = new AtomicLongCurrentTime1000IncrementalNonceFactory();
 
   public static final class BitmexOrderFlag implements Order.IOrderFlags {
     public String id;

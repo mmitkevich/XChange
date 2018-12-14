@@ -16,6 +16,7 @@ import org.knowm.xchange.okcoin.dto.marketdata.OkCoinKline;
 import org.knowm.xchange.okcoin.dto.marketdata.OkCoinKlineType;
 import org.knowm.xchange.okcoin.dto.marketdata.OkCoinTickerResponse;
 import org.knowm.xchange.okcoin.dto.marketdata.OkCoinTrade;
+import org.knowm.xchange.proxy.Socks4ProxyHelper;
 import si.mazi.rescu.RestProxyFactory;
 
 public class OkCoinMarketDataServiceRaw extends OkCoinBaseService {
@@ -32,8 +33,11 @@ public class OkCoinMarketDataServiceRaw extends OkCoinBaseService {
     super(exchange);
 
     okCoin =
-        RestProxyFactory.createProxy(
-            OkCoin.class, exchange.getExchangeSpecification().getSslUri(), getClientConfig());
+            Socks4ProxyHelper.createSock4OrDirectProxyRest(
+                    OkCoin.class,
+                    exchange,
+                    exchange.getExchangeSpecification().getSslUri(),
+                    getClientConfig());
   }
 
   /**

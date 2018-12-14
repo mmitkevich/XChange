@@ -20,6 +20,7 @@ import org.knowm.xchange.currency.CurrencyPair;
 import org.knowm.xchange.dto.meta.CurrencyMetaData;
 import org.knowm.xchange.dto.meta.CurrencyPairMetaData;
 import org.knowm.xchange.exceptions.ExchangeException;
+import org.knowm.xchange.proxy.Socks4ProxyHelper;
 import org.knowm.xchange.utils.AuthUtils;
 import org.knowm.xchange.utils.nonce.AtomicLongCurrentTimeIncrementalNonceFactory;
 import org.slf4j.Logger;
@@ -159,7 +160,11 @@ public class BinanceExchange extends BaseExchange {
 
       // Do a little warm up
       Binance binance =
-          RestProxyFactory.createProxy(Binance.class, getExchangeSpecification().getSslUri());
+              Socks4ProxyHelper.createSock4OrDirectProxyRest(
+                      Binance.class,
+                      this,
+                      this.getExchangeSpecification().getSslUri());
+          //RestProxyFactory.createProxy(Binance.class, getExchangeSpecification().getSslUri());
       Date serverTime = new Date(binance.time().getServerTime().getTime());
 
       // Assume that we are closer to the server time when we get the repose
