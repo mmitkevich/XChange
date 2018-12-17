@@ -1,5 +1,6 @@
 package org.knowm.xchange.bitmex.dto.marketdata;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -7,6 +8,7 @@ import org.knowm.xchange.bitmex.AbstractHttpResponseAware;
 import org.knowm.xchange.bitmex.dto.trade.BitmexSide;
 
 /** see field description at http://www.onixs.biz/fix-dictionary/5.0.SP2/fields_by_name.html */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class BitmexPrivateOrder extends AbstractHttpResponseAware {
 
   private final BigDecimal price;

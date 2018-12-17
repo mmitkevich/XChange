@@ -80,13 +80,15 @@ public class BitmexBaseService extends BaseExchangeService<BitmexExchange> imple
       throw handleError(e);
     }
     Map<String, List<String>> responseHeaders = result.getResponseHeaders();
-    rateLimit = Integer.valueOf(responseHeaders.get("X-RateLimit-Limit").get(0));
-    rateLimitRemaining = Integer.valueOf(responseHeaders.get("X-RateLimit-Remaining").get(0));
-    rateLimitReset = Long.valueOf(responseHeaders.get("X-RateLimit-Reset").get(0));
+    if(responseHeaders!=null) {
+      rateLimit = Integer.valueOf(responseHeaders.get("X-RateLimit-Limit").get(0));
+      rateLimitRemaining = Integer.valueOf(responseHeaders.get("X-RateLimit-Remaining").get(0));
+      rateLimitReset = Long.valueOf(responseHeaders.get("X-RateLimit-Reset").get(0));
 
-    RateLimitUpdateListener rateLimitUpdateListener = exchange.getRateLimitUpdateListener();
-    if (rateLimitUpdateListener != null) {
-      rateLimitUpdateListener.rateLimitUpdate(rateLimit, rateLimitRemaining, rateLimitReset);
+      RateLimitUpdateListener rateLimitUpdateListener = exchange.getRateLimitUpdateListener();
+      if (rateLimitUpdateListener != null) {
+        rateLimitUpdateListener.rateLimitUpdate(rateLimit, rateLimitRemaining, rateLimitReset);
+      }
     }
     return result;
   }

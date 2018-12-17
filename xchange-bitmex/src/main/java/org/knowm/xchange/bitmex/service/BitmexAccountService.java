@@ -43,17 +43,18 @@ public class BitmexAccountService extends BitmexAccountServiceRaw implements Acc
 
     List<BitmexPosition> positions = getBitmexPositions();
 
-    List<Balance> posBalances = positions.stream().map(
-            position -> new Balance(BitmexUtils.translateBitmexCurrency(position.getSymbol()), position.getCurrentQty()))
-              .collect(Collectors.toMap(
-                    Balance::getCurrency, Balance::getTotal, (a,b)->a.add(b))
-            ).entrySet().stream().map(
-                    e->new Balance(e.getKey(),e.getValue())).collect(Collectors.toList());
-
     List<BitmexMarginAccount> marginAccounts = getBitmexMarginAccountsStatus();
     List<Balance> marginBalances = marginAccounts.stream().map(
             acc -> new Balance(BitmexUtils.translateBitmexCurrency(acc.getCurrency()), acc.getMarginBalance(), acc.getAvailableMargin()))
             .collect(Collectors.toList());
+
+    List<Balance> posBalances = positions.stream().map(
+            position -> new Balance(BitmexUtils.translateBitmexCurrencyPair(position.getSymbol()).base, position.getCurrentQty()))
+            .collect(Collectors.toMap(
+                    Balance::getCurrency, Balance::getTotal, (a,b)->a.add(b))
+            ).entrySet().stream().map(
+                    e->new Balance(e.getKey(),e.getValue())).collect(Collectors.toList());
+
 
     return new AccountInfo(username, new Wallet("trading", marginBalances), new Wallet("positions", posBalances));
   }

@@ -100,6 +100,9 @@ public class BitmexUtils {
   public static Currency translateBitmexCurrency(String currencyIn) {
 
     Currency currencyOut = bitmexCurrencies.inverse().get(currencyIn);
+    if(currencyOut==null)
+      if("XBT".equals(currencyIn.toUpperCase()))
+        currencyOut = Currency.BTC;
 
     if (currencyOut == null) {
       throw new ExchangeException("Bitmex does not support the currency code " + currencyIn);

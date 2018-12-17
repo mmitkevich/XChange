@@ -19,6 +19,7 @@ import org.knowm.xchange.bitfinex.v1.dto.account.BitfinexFeesJSONTest;
 import org.knowm.xchange.bitfinex.v1.dto.account.BitfinexTradingFeeResponse;
 import org.knowm.xchange.bitfinex.v1.dto.account.BitfinexWalletJSONTest;
 import org.knowm.xchange.bitfinex.v1.dto.marketdata.BitfinexLevel;
+import org.knowm.xchange.bitfinex.v1.dto.trade.BitfinexActivePositionsResponse;
 import org.knowm.xchange.bitfinex.v1.dto.trade.BitfinexOrderStatusResponse;
 import org.knowm.xchange.bitfinex.v1.dto.trade.BitfinexTradeResponse;
 import org.knowm.xchange.currency.Currency;
@@ -91,7 +92,7 @@ public class BitfinexAdaptersTest {
     ObjectMapper mapper = new ObjectMapper();
     BitfinexBalancesResponse[] response = mapper.readValue(is, BitfinexBalancesResponse[].class);
 
-    List<Wallet> wallets = BitfinexAdapters.adaptWallets(response);
+    List<Wallet> wallets = BitfinexAdapters.adaptWallets(response, new BitfinexActivePositionsResponse[0]);
 
     Wallet exchangeWallet =
         wallets

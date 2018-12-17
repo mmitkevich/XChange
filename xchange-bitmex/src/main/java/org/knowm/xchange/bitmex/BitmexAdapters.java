@@ -366,7 +366,7 @@ public class BitmexAdapters {
   public static String adaptCurrencyPairToSymbol(CurrencyPair currencyPair) {
     return currencyPair == null
         ? null
-        : currencyPair.base.getCurrencyCode() + currencyPair.counter.getCurrencyCode();
+        : adaptXchangeCurrency(currencyPair.base.getCurrencyCode()) + currencyPair.counter.getCurrencyCode();
   }
 
   public static class OrdersContainer {
