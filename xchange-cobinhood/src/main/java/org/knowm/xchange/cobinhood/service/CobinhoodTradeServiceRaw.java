@@ -16,11 +16,11 @@ import org.knowm.xchange.dto.trade.LimitOrder;
 
 public class CobinhoodTradeServiceRaw extends CobinhoodBaseService {
 
-  protected CobinhoodTradeServiceRaw(Exchange exchange) {
+  public CobinhoodTradeServiceRaw(Exchange exchange) {
     super(exchange);
   }
 
-  protected CobinhoodResponse<CobinhoodOrder.Container> placeCobinhoodLimitOrder(LimitOrder order)
+  public CobinhoodResponse<CobinhoodOrder.Container> placeCobinhoodLimitOrder(LimitOrder order)
       throws IOException {
     CobinhoodPlaceOrderRequest request =
         new CobinhoodPlaceOrderRequest(
@@ -33,15 +33,15 @@ public class CobinhoodTradeServiceRaw extends CobinhoodBaseService {
     return cobinhood.placeOrder(apiKey, exchange.getNonceFactory(), request);
   }
 
-  protected CobinhoodResponse<Void> cancelCobinhoodOrder(String orderId) {
+  public CobinhoodResponse<Void> cancelCobinhoodOrder(String orderId) {
     return cobinhood.cancelOrder(apiKey, exchange.getNonceFactory(), orderId);
   }
 
-  protected Collection<Order> getCobinhoodOrder(String[] orderIds) {
+  public Collection<Order> getCobinhoodOrder(String[] orderIds) {
     return null;
   }
 
-  protected CobinhoodResponse<CobinhoodOrders> getCobinhoodOpenOrders(
+  public CobinhoodResponse<CobinhoodOrders> getCobinhoodOpenOrders(
       CobinhoodOpenOrdersParams params) {
     return cobinhood.getAllOrders(apiKey, params.getPairId(), params.getLimit());
   }

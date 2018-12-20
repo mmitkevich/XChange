@@ -89,7 +89,7 @@ public class CobinhoodAdapters {
   public static AccountInfo adaptAccountInfo(CobinhoodCoinBalances balances) {
     Wallet wallet =
         new Wallet(
-            null,
+            "exchange",
             balances
                 .getBalances()
                 .stream()
