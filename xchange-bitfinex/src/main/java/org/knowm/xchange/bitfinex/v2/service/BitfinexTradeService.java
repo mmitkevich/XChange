@@ -1,6 +1,9 @@
 package org.knowm.xchange.bitfinex.v2.service;
 
 import org.knowm.xchange.Exchange;
+import org.knowm.xchange.bitfinex.common.dto.BitfinexException;
+import org.knowm.xchange.bitfinex.v1.dto.trade.BitfinexCancelAllOrdersRequest;
+import org.knowm.xchange.bitfinex.v1.dto.trade.BitfinexCancelOrderMultiRequest;
 import org.knowm.xchange.bitfinex.v2.dto.marketdata.BitfinexExceptionData;
 import org.knowm.xchange.bitfinex.v2.dto.marketdata.BitfinexOrder;
 import org.knowm.xchange.bitfinex.v2.dto.marketdata.BitfinexOrderBody;
@@ -55,4 +58,43 @@ public class BitfinexTradeService extends BitfinexBaseService implements TradeSe
             "t" + currencyPair.base.toString() + currencyPair.counter.toString()+"_"+clientOrderId);
   }
 
+  public boolean cancelAllBitfinexOrders() throws IOException {
+
+    try {
+      bitfinex.cancelAllOrders(
+              apiKey,
+              payloadCreator,
+              signatureCreator,
+              new BitfinexCancelAllOrdersRequest(
+                      String.valueOf(exchange.getNonceFactory().createValue())));
+      return true;
+    } catch (BitfinexException e) {
+      if (e.getMessage().equals("Orders could not be cancelled.")) {
+        return false;
+      } else {
+        throw handleException(e);
+      }
+    }
+  }
+
+  public boolean cancelBitfinexOrderMulti(List<String> orderIds) throws IOException {
+
+    long[] cancelOrderIds = new long[orderIds.size()];
+
+    for (int i = 0; i < cancelOrderIds.length; i++) {
+      cancelOrderIds[i] = Long.valueOf(orderIds.get(i));
+    }
+
+    try {
+      bitfinex.cancelOrderMulti(
+              apiKey,
+              payloadCreator,
+              signatureCreator,
+              new BitfinexCancelOrderMultiRequest(
+                      String.valueOf(exchange.getNonceFactory().createValue()), cancelOrderIds));
+      return true;
+    } catch (BitfinexException e) {
+      throw handleException(e);
+    }
+  }
 }

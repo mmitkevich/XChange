@@ -39,6 +39,7 @@ public class BitfinexBaseService extends BaseExchangeService implements BaseServ
                     exchange,
                     exchange.getExchangeSpecification().getSslUri(),
                     getClientConfig());
+
     this.apiKey = exchange.getExchangeSpecification().getApiKey();
     this.signatureCreator =
         BitfinexHmacPostBodyDigest.createInstance(
